@@ -7,412 +7,392 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            /* Темный фон с легким красным градиентом */
-            background: radial-gradient(circle at top left, #2a0a0a 0%, #0d0d0d 50%, #050505 100%);
-            color: #e0e0e0;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .portfolio-card {
-            max-width: 1000px;
-            width: 100%;
-            /* Темное стекло */
-            background: rgba(20, 20, 20, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 3rem;
-            padding: 3rem 2.5rem;
-            /* Красное неоновое свечение вокруг карточки */
-            box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.25),
-                        0 0 0 1px rgba(220, 38, 38, 0.3) inset;
-            border: 1px solid rgba(220, 38, 38, 0.2);
-            transition: all 0.3s ease;
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-        }
-
-        .avatar {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            background-image: url('avatar.jpg'); 
-            background-size: cover;
-            background-position: center center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Красная обводка и свечение аватарки */
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
-            border: 3px solid #dc2626;
-            flex-shrink: 0;
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-
-        .avatar:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(220, 38, 38, 0.9);
-        }
-
-        .title-block h1 {
-            font-size: 2.6rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            /* Градиент от белого к красному */
-            background: linear-gradient(to right, #ffffff, #fca5a5);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-            margin-bottom: 0.4rem;
-        }
-
-        .title-block .subtitle {
-            font-size: 1.2rem;
-            font-weight: 400;
-            color: #a3a3a3;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: rgba(220, 38, 38, 0.15);
-            color: #f87171;
-            padding: 0.25rem 1rem;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            border: 1px solid rgba(220, 38, 38, 0.3);
-        }
-
-        .about {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 1.8rem 2rem;
-            border-radius: 2rem;
-            margin-bottom: 2.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .about p {
-            font-size: 1.1rem;
-            color: #d4d4d4;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.7rem 1rem;
-            margin: 2rem 0 2.5rem;
-        }
-
-        .skill-tag {
-            background: #171717;
-            padding: 0.5rem 1.3rem;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #d4d4d4;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease;
-            cursor: default;
-        }
-
-        .skill-tag:hover {
-            transform: translateY(-3px);
-            border-color: #dc2626;
-            color: #fca5a5;
-            box-shadow: 0 8px 15px rgba(220, 38, 38, 0.2);
-        }
-
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(220, 38, 38, 0.1);
-            color: #fca5a5;
-            padding: 0.8rem 1.5rem;
-            border-radius: 15px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(220, 38, 38, 0.3);
-        }
-
-        .project-link:hover {
-            background: rgba(220, 38, 38, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px -4px rgba(220, 38, 38, 0.4);
-        }
-
-        .cta-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            margin-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            /* Яркий красный градиент */
-            background: linear-gradient(135deg, #dc2626, #991b1b);
-            color: white;
-            font-weight: 700;
-            font-size: 1.2rem;
-            padding: 1rem 2.8rem;
-            border-radius: 60px;
-            text-decoration: none;
-            letter-spacing: 0.01em;
-            box-shadow: 0 16px 30px -8px rgba(220, 38, 38, 0.6);
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
-            border: none;
-            cursor: pointer;
-            text-align: center;
-            transform: scale(1);
-            will-change: transform, box-shadow;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn:hover {
-            transform: scale(1.06);
-            box-shadow: 0 24px 40px -8px rgba(220, 38, 38, 0.8);
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-        }
-
-        .btn:active {
-            transform: scale(0.98);
-            transition-duration: 0.08s;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.2rem;
-            align-items: center;
-            margin-top: 0.5rem;
-        }
-
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #171717;
-            color: #a3a3a3;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .social-icon:hover {
-            transform: translateY(-4px) scale(1.05);
-            color: white;
-            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
-        }
-
-        .social-icon.telegram:hover {
-            background: #2CA5E0;
-            border-color: #2CA5E0;
-        }
-
-        .social-icon.github:hover {
-            background: #333;
-            border-color: #555;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        .social-icon.portfolio:hover {
-            background: #dc2626;
-            border-color: #dc2626;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at top left, #2a0a0a 0%, #0d0d0d 50%, #050505 100%); }
+        
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #e0e0e0; line-height: 1.6; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; overflow: hidden; }
 
-        .social-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-            transition: fill 0.3s ease;
+        .portfolio-card { 
+            max-width: 1000px; width: 100%; background: rgba(20, 20, 20, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); 
+            border-radius: 3rem; padding: 3rem 2.5rem; box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.25), 0 0 0 1px rgba(220, 38, 38, 0.3) inset; 
+            border: 1px solid rgba(220, 38, 38, 0.2); animation: fadeIn 0.8s ease-out; position: relative; z-index: 1; 
         }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .profile-header { display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        
+        /* Статус "Онлайн" возле аватарки */
+        .avatar-wrapper { position: relative; }
+        .avatar { width: 100px; height: 100px; border-radius: 50%; background-image: url('avatar.jpg'); background-size: cover; background-position: center; box-shadow: 0 0 20px rgba(220, 38, 38, 0.6); border: 3px solid #dc2626; transition: transform 0.25s ease; }
+        .avatar:hover { transform: scale(1.05); }
+        .status-dot { position: absolute; bottom: 5px; right: 5px; width: 20px; height: 20px; background-color: #22c55e; border: 3px solid #1a1a1a; border-radius: 50%; }
+        .status-dot::after { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px; border-radius: 50%; border: 2px solid #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+
+        .title-block h1 { font-size: 2.4rem; font-weight: 700; background: linear-gradient(to right, #ffffff, #fca5a5); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 0.2rem; }
+        .title-block .subtitle { font-size: 1.1rem; color: #a3a3a3; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .badge { background: rgba(220, 38, 38, 0.15); color: #f87171; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(220, 38, 38, 0.3); }
+        .badge-green { background: rgba(34, 197, 94, 0.15); color: #4ade80; padding: 0.2rem 0.8rem; border-radius: 30px; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+        .about { background: rgba(255, 255, 255, 0.03); padding: 1.2rem 1.5rem; border-radius: 1.5rem; margin-bottom: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .about p { font-size: 1rem; color: #d4d4d4; }
+
+        /* Бегущая строка с технологиями */
+        .marquee-container { width: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.03); border-radius: 15px; padding: 0.5rem 0; margin-bottom: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.05); white-space: nowrap; }
+        .marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+        .marquee-content span { font-weight: 600; color: #fca5a5; margin: 0 1.5rem; font-size: 0.9rem; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Карточки */
+        .flip-cards-container { display: flex; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .flip-card { background-color: transparent; width: calc(50% - 0.75rem); height: 220px; perspective: 1000px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1.5rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem; border: 1px solid rgba(220, 38, 38, 0.2); }
+        
+        .flip-card-front { background: rgba(255, 255, 255, 0.03); color: #fff; cursor: pointer; }
+        .flip-card-front h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: #fca5a5; }
+        .flip-card-front p { font-size: 0.9rem; color: #a3a3a3; }
+
+        .flip-card-back { background: rgba(220, 38, 38, 0.1); color: white; transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; overflow-y: auto; scrollbar-width: none; }
+        .flip-card-back::-webkit-scrollbar { display: none; }
+        .flip-card-back h4 { color: #fca5a5; margin-bottom: 0.5rem; font-size: 1.1rem; width: 100%; text-align: center; }
+        
+        .btn-close-card { position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: #fca5a5; font-size: 1.2rem; cursor: pointer; }
+        .btn-close-card:hover { color: #fff; }
+
+        .flip-card-back ul { list-style: none; width: 100%; font-size: 0.85rem; }
+        .flip-card-back ul li { margin-bottom: 0.4rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.4rem; display: flex; justify-content: space-between; }
+
+        .btn-leave-review { margin-top: auto; background: #dc2626; color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; transition: background 0.3s; margin-top: 1rem; }
+        .btn-leave-review:hover { background: #ef4444; }
+        .btn-leave-review:disabled { background: #555; cursor: not-allowed; }
+
+        /* Модальное окно */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background: #1a1a1a; padding: 2rem; border-radius: 2rem; width: 90%; max-width: 500px; border: 1px solid rgba(220, 38, 38, 0.3); box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.3); transform: translateY(20px); transition: transform 0.3s ease; position: relative; }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-content h3 { color: #fca5a5; margin-bottom: 1rem; }
+        .modal-content input, .modal-content textarea { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border-radius: 10px; background: #0d0d0d; border: 1px solid rgba(255,255,255,0.1); color: white; font-family: inherit; }
+        .modal-content input:focus, .modal-content textarea:focus { outline: none; border-color: #dc2626; }
+        .modal-actions { display: flex; gap: 1rem; }
+        .modal-actions button { flex: 1; padding: 0.8rem; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; }
+        .modal-actions .btn-cancel { background: #333; color: #ccc; }
+        .modal-actions .btn-submit { background: linear-gradient(135deg, #dc2626, #991b1b); color: white; }
+
+        /* Подвал */
+        .project-link { display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: rgba(220, 38, 38, 0.1); color: #fca5a5; padding: 0.6rem 1.2rem; border-radius: 15px; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease; border: 1px solid rgba(220, 38, 38, 0.3); margin-bottom: 1.5rem; }
+        .project-link:hover { background: rgba(220, 38, 38, 0.2); transform: translateY(-2px); }
+        .cta-section { display: flex; flex-direction: column; align-items: center; gap: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 1.5rem; }
+        .btn { display: inline-block; background: linear-gradient(135deg, #dc2626, #991b1b); color: white; font-weight: 700; font-size: 1rem; padding: 0.8rem 2.2rem; border-radius: 60px; text-decoration: none; box-shadow: 0 10px 20px -8px rgba(220, 38, 38, 0.6); transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1); border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 15px 30px -8px rgba(220, 38, 38, 0.8); }
+        .social-links { display: flex; gap: 1rem; align-items: center; }
+        .social-icon { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #171717; color: #a3a3a3; text-decoration: none; transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .social-icon:hover { transform: translateY(-3px) scale(1.05); color: white; box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3); }
+        .social-icon.telegram:hover { background: #2CA5E0; border-color: #2CA5E0; }
+        .social-icon.github:hover { background: #333; border-color: #555; }
+        .social-icon.portfolio:hover { background: #dc2626; border-color: #dc2626; }
+        .social-icon svg { width: 20px; height: 20px; fill: currentColor; }
+
+        /* Счетчик посещений */
+        .visits-counter { font-size: 0.8rem; color: #666; margin-top: 1rem; text-align: center; }
 
         @media (max-width: 640px) {
-            body {
-                padding: 1rem;
-                align-items: flex-start;
-            }
-
-            .portfolio-card {
-                padding: 2rem 1.5rem;
-                border-radius: 2rem;
-            }
-
-            .profile-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                margin-bottom: 1.8rem;
-            }
-
-            .avatar {
-                width: 85px;
-                height: 85px;
-            }
-
-            .title-block h1 {
-                font-size: 2rem;
-            }
-
-            .title-block .subtitle {
-                font-size: 1rem;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.4rem;
-            }
-
-            .about {
-                padding: 1.4rem 1.2rem;
-            }
-
-            .about p {
-                font-size: 1rem;
-            }
-
-            .skills {
-                gap: 0.5rem 0.8rem;
-                margin: 1.5rem 0 2rem;
-            }
-
-            .skill-tag {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-            }
-
-            .btn {
-                font-size: 1.1rem;
-                padding: 0.9rem 2rem;
-                width: 100%;
-                text-align: center;
-            }
-
-            .cta-section {
-                align-items: stretch;
-            }
-            
-            .social-links {
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .portfolio-card {
-                padding: 1.5rem 1.2rem;
-            }
-
-            .title-block h1 {
-                font-size: 1.7rem;
-            }
-
-            .avatar {
-                width: 70px;
-                height: 70px;
-            }
-        }
-
-        .accent-line {
-            height: 4px;
-            width: 60px;
-            /* Красная линия */
-            background: linear-gradient(90deg, #dc2626, #7f1d1d);
-            border-radius: 4px;
-            margin: 1.2rem 0 0.2rem;
+            .portfolio-card { padding: 2rem 1.5rem; border-radius: 2rem; }
+            .profile-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .title-block h1 { font-size: 2rem; }
+            .flip-card { width: 100%; height: 220px; }
+            .btn { width: 100%; text-align: center; }
         }
     </style>
 </head>
 <body>
+    <canvas id="bg-canvas"></canvas>
+    
     <div class="portfolio-card">
         <header class="profile-header">
-            <div class="avatar"></div>
+            <!-- Аватарка со статусом -->
+            <div class="avatar-wrapper">
+                <div class="avatar"></div>
+                <div class="status-dot" title="Онлайн"></div>
+            </div>
             <div class="title-block">
                 <h1>Игорь Романюк</h1>
                 <div class="subtitle">
-                    <span>Начинающий разработчик</span>
-                    <span class="badge">C# / Боты / ИИ</span>
+                    <span>Разработчик</span>
+                    <span class="badge">C# / Боты / Парсинг</span>
+                    <span class="badge-green">🟢 Открыт для заказов</span>
                 </div>
-                <div class="accent-line"></div>
             </div>
         </header>
 
         <section class="about">
-            <p>Создаю быстрые и автоматизированные решения для бизнеса и Telegram. Разрабатываю умных ботов с интеграцией нейросетей, парсеры данных и адаптивные веб-интерфейсы. Ценю чистый код, скорость работы и практическую пользу.</p>
+            <p>Создаю быстрые и автоматизированные решения для бизнеса и Telegram. Разрабатываю умных ботов с интеграцией нейросетей, сложные парсеры данных и адаптивные веб-интерфейсы.</p>
         </section>
 
-        <div class="skills">
-            <span class="skill-tag">C# / .NET 8</span>
-            <span class="skill-tag">Telegram-боты</span>
-            <span class="skill-tag">Интеграция с ИИ (OpenRouter)</span>
-            <span class="skill-tag">Парсинг данных</span>
-            <span class="skill-tag">Веб-вёрстка HTML/CSS/JS</span>
-            <span class="skill-tag">SQLite / Entity Framework</span>
+        <!-- Бегущая строка -->
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <span>C#</span> <span>•</span>
+                <span>.NET 8</span> <span>•</span>
+                <span>Telegram.Bot</span> <span>•</span>
+                <span>Playwright</span> <span>•</span>
+                <span>Entity Framework</span> <span>•</span>
+                <span>SQLite</span> <span>•</span>
+                <span>HTML5</span> <span>•</span>
+                <span>CSS3</span> <span>•</span>
+                <span>JavaScript</span> <span>•</span>
+                <!-- Дублируем для бесконечности -->
+                <span>C#</span> <span>•</span>
+                <span>.NET 8</span> <span>•</span>
+                <span>Telegram.Bot</span> <span>•</span>
+                <span>Playwright</span> <span>•</span>
+                <span>Entity Framework</span> <span>•</span>
+                <span>SQLite</span> <span>•</span>
+                <span>HTML5</span> <span>•</span>
+                <span>CSS3</span> <span>•</span>
+                <span>JavaScript</span> <span>•</span>
+            </div>
         </div>
 
-        <a href="https://github.com/layZ-rus/MyFirstTelegramBot" target="_blank" class="project-link">
-            🚀 Посмотреть моего Telegram-бота на GitHub
+        <div class="flip-cards-container">
+            <div class="flip-card" id="servicesCard">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" onclick="document.getElementById('servicesCard').classList.add('is-flipped')">
+                        <h3>Услуги</h3>
+                        <p>Нажмите, чтобы посмотреть цены</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <button class="btn-close-card" onclick="document.getElementById('servicesCard').classList.remove('is-flipped')">✕</button>
+                        <h4>Прайс-лист</h4>
+                        <ul>
+                            <li><span>Telegram-бот:</span> <b>от 5 000 ₽</b></li>
+                            <li><span>Парсер данных:</span> <b>от 3 000 ₽</b></li>
+                            <li><span>Веб-вёрстка:</span> <b>от 8 000 ₽</b></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flip-card" id="reviewsCard">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front" onclick="document.getElementById('reviewsCard').classList.add('is-flipped')">
+                        <h3>Отзывы</h3>
+                        <p>Нажмите, чтобы прочитать</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <button class="btn-close-card" onclick="document.getElementById('reviewsCard').classList.remove('is-flipped')">✕</button>
+                        <h4>Отзывы клиентов</h4>
+                        <div id="reviews-container" style="width: 100%; text-align: center; font-size: 0.9rem; color: #a3a3a3;">
+                            Пока нет отзывов. Будьте первым!
+                        </div>
+                        <button id="btnLeaveReview" class="btn-leave-review" onclick="openReviewModal()">Оставить отзыв</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="https://github.com/layZ-rus/PriceMonitor.Worker" target="_blank" class="project-link">
+            🚀 Посмотреть мой проект на GitHub
         </a>
 
         <div class="cta-section">
             <a href="https://t.me/layz102" class="btn" target="_blank">Написать мне в Telegram</a>
-            
             <div class="social-links">
-                <a href="https://t.me/layz102" target="_blank" class="social-icon telegram" title="Telegram">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                    </svg>
-                </a>
-                
-                <a href="https://github.com/layZ-rus" target="_blank" class="social-icon github" title="GitHub">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                    </svg>
-                </a>
+                <a href="https://t.me/layz102" target="_blank" class="social-icon telegram" title="Telegram"><svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+                <a href="https://github.com/layZ-rus" target="_blank" class="social-icon github" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                <a href="https://github.com/layZ-rus?tab=repositories" target="_blank" class="social-icon portfolio" title="Все проекты"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></a>
+            </div>
+        </div>
+        <div class="visits-counter" id="visitCounter">Счетчик загружается...</div>
+    </div>
 
-                <a href="https://github.com/layZ-rus?tab=repositories" target="_blank" class="social-icon portfolio" title="Мои репозитории (Портфолио)">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                    </svg>
-                </a>
+    <div class="modal-overlay" id="reviewModal">
+        <div class="modal-content">
+            <h3>Оставить отзыв</h3>
+            <p style="font-size: 0.9rem; color: #a3a3a3; margin-bottom: 1rem;">Ваш отзыв появится на сайте и будет отправлен мне в Telegram.</p>
+            <input type="text" id="reviewName" placeholder="Ваше имя" required>
+            <textarea id="reviewText" rows="4" placeholder="Ваш отзыв..." required></textarea>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeReviewModal()">Отмена</button>
+                <button class="btn-submit" onclick="submitReview()">Отправить</button>
             </div>
         </div>
     </div>
+
+    <script>
+        // --- ЛОГИКА ОТЗЫВОВ ---
+        document.addEventListener("DOMContentLoaded", () => {
+            loadReviews();
+            checkIfUserReviewed();
+            updateVisitCounter();
+        });
+
+        function openReviewModal() { document.getElementById('reviewModal').classList.add('active'); }
+        function closeReviewModal() { document.getElementById('reviewModal').classList.remove('active'); }
+
+        async function submitReview() {
+            const name = document.getElementById('reviewName').value;
+            const text = document.getElementById('reviewText').value;
+
+            if (!name || !text) { alert('Пожалуйста, заполните все поля!'); return; }
+
+            const reviews = JSON.parse(localStorage.getItem('myReviews') || '[]');
+            reviews.push({ name: name, text: text, date: new Date().toLocaleDateString() });
+            localStorage.setItem('myReviews', JSON.stringify(reviews));
+            localStorage.setItem('hasReviewed', 'true');
+
+            const botToken = 'ВАШ_ТОКЕН_БОТА'; 
+            const chatId = 'ВАШ_CHAT_ID';
+            const message = `📩 <b>Новый отзыв с сайта!</b>\n\n👤 Имя: ${name}\n💬 Текст: ${text}`;
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            try {
+                await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'HTML' }) });
+            } catch (e) { console.error(e); }
+
+            document.getElementById('reviewName').value = '';
+            document.getElementById('reviewText').value = '';
+            closeReviewModal();
+            loadReviews();
+            checkIfUserReviewed();
+            alert('✅ Спасибо! Ваш отзыв добавлен.');
+        }
+
+        function loadReviews() {
+            const reviews = JSON.parse(localStorage.getItem('myReviews') || '[]');
+            const container = document.getElementById('reviews-container');
+            if (reviews.length === 0) {
+                container.innerHTML = '<p style="color: #666; font-style: italic;">Пока нет отзывов. Будьте первым!</p>';
+                return;
+            }
+            container.innerHTML = reviews.map(r => `
+                <div style="text-align: left; margin-bottom: 0.8rem; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+                    <div style="font-weight: 600; color: #fca5a5; font-size: 0.85rem; display: flex; justify-content: space-between;">
+                        <span>${r.name}</span><span style="color: #666; font-weight: normal;">${r.date}</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #d4d4d4;">"${r.text}"</div>
+                </div>
+            `).join('');
+        }
+
+        function checkIfUserReviewed() {
+            const hasReviewed = localStorage.getItem('hasReviewed');
+            const btn = document.getElementById('btnLeaveReview');
+            if (hasReviewed) {
+                btn.disabled = true;
+                btn.textContent = 'Вы уже оставили отзыв';
+            } else {
+                btn.disabled = false;
+                btn.textContent = 'Оставить отзыв';
+            }
+        }
+
+        // --- СЧЕТЧИК ПОСЕЩЕНИЙ ---
+        function updateVisitCounter() {
+            let visits = localStorage.getItem('siteVisits');
+            visits = visits ? parseInt(visits) + 1 : 1;
+            localStorage.setItem('siteVisits', visits);
+            document.getElementById('visitCounter').textContent = `Вы посетили этот сайт ${visits} раз(а)`;
+        }
+
+        // --- 3D ФОН (НЕЙРОННАЯ СЕТЬ) ---
+        const canvas = document.getElementById('bg-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // Создаем частицы
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 150; // Уменьшили, чтобы линии не были слишком плотными
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 15;
+        }
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({ size: 0.05, color: 0xdc2626, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        // Линии (сеть)
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0xdc2626, transparent: true, opacity: 0.15 });
+        const lineGeometry = new THREE.BufferGeometry();
+        const positions = particlesGeometry.attributes.position.array;
+        const lines = [];
+
+        // Функция для обновления линий (соединяем близкие точки)
+        function updateLines() {
+            // Удаляем старые линии
+            lines.forEach(line => scene.remove(line));
+            lines.length = 0;
+
+            const positions = particlesGeometry.attributes.position.array;
+            for (let i = 0; i < particlesCount; i++) {
+                for (let j = i + 1; j < particlesCount; j++) {
+                    const dx = positions[i*3] - positions[j*3];
+                    const dy = positions[i*3+1] - positions[j*3+1];
+                    const dz = positions[i*3+2] - positions[j*3+2];
+                    const dist = Math.sqrt(dx*dx + dy*dy + dz*dz);
+
+                    if (dist < 2.5) { // Если расстояние меньше 2.5, рисуем линию
+                        const points = [];
+                        points.push(new THREE.Vector3(positions[i*3], positions[i*3+1], positions[i*3+2]));
+                        points.push(new THREE.Vector3(positions[j*3], positions[j*3+1], positions[j*3+2]));
+                        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                        const line = new THREE.Line(geometry, lineMaterial);
+                        scene.add(line);
+                        lines.push(line);
+                    }
+                }
+            }
+        }
+
+        // Начальное обновление линий
+        updateLines();
+
+        let mouseX = 0; let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = event.clientX / window.innerWidth - 0.5;
+            mouseY = event.clientY / window.innerHeight - 0.5;
+        });
+
+        const clock = new THREE.Clock();
+        let lastLineUpdate = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+            
+            particlesMesh.rotation.y = elapsedTime * 0.05;
+            particlesMesh.rotation.x = elapsedTime * 0.02;
+
+            // Обновляем линии каждые 0.5 секунды (чтобы не грузить процессор)
+            if (elapsedTime - lastLineUpdate > 0.5) {
+                updateLines();
+                lastLineUpdate = elapsedTime;
+            }
+
+            camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 1.5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
