@@ -16,8 +16,9 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(145deg, #f9faff 0%, #eef2f9 100%);
-            color: #1e2b3c;
+            /* Темный фон с легким красным градиентом */
+            background: radial-gradient(circle at top left, #2a0a0a 0%, #0d0d0d 50%, #050505 100%);
+            color: #e0e0e0;
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
@@ -29,14 +30,16 @@
         .portfolio-card {
             max-width: 1000px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            /* Темное стекло */
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 3rem;
             padding: 3rem 2.5rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 20, 40, 0.25),
-                        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            /* Красное неоновое свечение вокруг карточки */
+            box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.25),
+                        0 0 0 1px rgba(220, 38, 38, 0.3) inset;
+            border: 1px solid rgba(220, 38, 38, 0.2);
             transition: all 0.3s ease;
             animation: fadeIn 0.8s ease-out;
         }
@@ -64,21 +67,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 12px 24px -8px rgba(79, 125, 243, 0.4);
-            border: 3px solid rgba(255, 255, 255, 0.8);
+            /* Красная обводка и свечение аватарки */
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+            border: 3px solid #dc2626;
             flex-shrink: 0;
-            transition: transform 0.25s ease;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
 
         .avatar:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(220, 38, 38, 0.9);
         }
 
         .title-block h1 {
             font-size: 2.6rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(to right, #1e2b3c, #2d4a6b);
+            /* Градиент от белого к красному */
+            background: linear-gradient(to right, #ffffff, #fca5a5);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -89,7 +95,7 @@
         .title-block .subtitle {
             font-size: 1.2rem;
             font-weight: 400;
-            color: #4a5c72;
+            color: #a3a3a3;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -97,27 +103,27 @@
         }
 
         .badge {
-            background: #e0e9ff;
-            color: #2d4a8a;
+            background: rgba(220, 38, 38, 0.15);
+            color: #f87171;
             padding: 0.25rem 1rem;
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 600;
             letter-spacing: 0.01em;
+            border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
         .about {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.03);
             padding: 1.8rem 2rem;
             border-radius: 2rem;
             margin-bottom: 2.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .about p {
             font-size: 1.1rem;
-            color: #253544;
+            color: #d4d4d4;
         }
 
         .skills {
@@ -128,43 +134,44 @@
         }
 
         .skill-tag {
-            background: white;
+            background: #171717;
             padding: 0.5rem 1.3rem;
             border-radius: 40px;
             font-weight: 600;
             font-size: 0.95rem;
-            color: #1e2b3c;
-            box-shadow: 0 6px 14px rgba(0, 20, 40, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            color: #d4d4d4;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
             cursor: default;
         }
 
         .skill-tag:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 20px -8px rgba(79, 125, 243, 0.3);
-            border-color: #b8ccff;
+            border-color: #dc2626;
+            color: #fca5a5;
+            box-shadow: 0 8px 15px rgba(220, 38, 38, 0.2);
         }
 
         .project-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: #f0f4ff;
-            color: #2d4a8a;
+            background: rgba(220, 38, 38, 0.1);
+            color: #fca5a5;
             padding: 0.8rem 1.5rem;
             border-radius: 15px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.2s ease;
             margin-bottom: 2rem;
-            border: 1px solid #d0e0ff;
+            border: 1px solid rgba(220, 38, 38, 0.3);
         }
 
         .project-link:hover {
-            background: #e0e9ff;
+            background: rgba(220, 38, 38, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px -4px rgba(79, 125, 243, 0.2);
+            box-shadow: 0 8px 20px -4px rgba(220, 38, 38, 0.4);
         }
 
         .cta-section {
@@ -173,13 +180,14 @@
             align-items: center;
             gap: 1.5rem;
             margin-top: 1rem;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 2rem;
         }
 
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, #4f7df3, #7c5cf0);
+            /* Яркий красный градиент */
+            background: linear-gradient(135deg, #dc2626, #991b1b);
             color: white;
             font-weight: 700;
             font-size: 1.2rem;
@@ -187,20 +195,20 @@
             border-radius: 60px;
             text-decoration: none;
             letter-spacing: 0.01em;
-            box-shadow: 0 16px 30px -8px rgba(79, 125, 243, 0.5);
+            box-shadow: 0 16px 30px -8px rgba(220, 38, 38, 0.6);
             transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
             border: none;
             cursor: pointer;
             text-align: center;
             transform: scale(1);
             will-change: transform, box-shadow;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .btn:hover {
             transform: scale(1.06);
-            box-shadow: 0 24px 40px -8px rgba(79, 125, 243, 0.7);
-            background: linear-gradient(135deg, #5d88f5, #8a6bf2);
+            box-shadow: 0 24px 40px -8px rgba(220, 38, 38, 0.8);
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
         }
 
         .btn:active {
@@ -222,18 +230,18 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: white;
-            color: #4a5c72;
+            background: #171717;
+            color: #a3a3a3;
             text-decoration: none;
-            box-shadow: 0 6px 14px rgba(0, 20, 40, 0.08);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .social-icon:hover {
             transform: translateY(-4px) scale(1.05);
             color: white;
-            box-shadow: 0 12px 20px -8px rgba(79, 125, 243, 0.4);
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
         }
 
         .social-icon.telegram:hover {
@@ -243,12 +251,12 @@
 
         .social-icon.github:hover {
             background: #333;
-            border-color: #333;
+            border-color: #555;
         }
         
         .social-icon.portfolio:hover {
-            background: #4f7df3;
-            border-color: #4f7df3;
+            background: #dc2626;
+            border-color: #dc2626;
         }
 
         .social-icon svg {
@@ -344,7 +352,8 @@
         .accent-line {
             height: 4px;
             width: 60px;
-            background: linear-gradient(90deg, #4f7df3, #b085ff);
+            /* Красная линия */
+            background: linear-gradient(90deg, #dc2626, #7f1d1d);
             border-radius: 4px;
             margin: 1.2rem 0 0.2rem;
         }
